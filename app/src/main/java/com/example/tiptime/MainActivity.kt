@@ -46,6 +46,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TipTimeLayout() {
 
+    val amountInput = "0"
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -79,7 +81,7 @@ fun TipTimeLayout() {
                         .align(alignment = Alignment.Start)
                 )
 
-                EditNumberField()
+                EditNumberField(amountInput)
 
                 Text(
                     text = stringResource(R.string.tip_amount, "$0.00"),
@@ -91,21 +93,19 @@ fun TipTimeLayout() {
     }
 }
 
+@Composable
+fun EditNumberField(
+    amountInput: String
+) {
+    TextField(
+        value = amountInput,
+        onValueChange = {}
+    )
+}
+
 private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
     val tip = tipPercent / 100 * amount
     return NumberFormat.getCurrencyInstance().format(tip)
-}
-
-@Composable
-fun EditNumberField(
-    modifier: Modifier = Modifier
-) {
-    TextField(
-        value = "",
-        onValueChange = {},
-        modifier = modifier
-    )
-
 }
 
 @Preview(showBackground = true)
