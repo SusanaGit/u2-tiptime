@@ -110,6 +110,9 @@ fun EditNumberField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val amount = amountInput.toDoubleOrNull() ?: 0.0
+
     TextField(
         value = amountInput,
         onValueChange = onValueChange,
