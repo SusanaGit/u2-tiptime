@@ -21,6 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,7 +50,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TipTimeLayout() {
 
-    val amountInput = "0"
+    var amountInput by remember { mutableStateOf("0")}
 
     Scaffold(
         topBar = {
@@ -81,7 +85,12 @@ fun TipTimeLayout() {
                         .align(alignment = Alignment.Start)
                 )
 
-                EditNumberField(amountInput)
+                EditNumberField(
+                    amountInput,
+                    onValueChange = {
+                        newAmountInput -> amountInput = newAmountInput
+                    }
+                )
 
                 Text(
                     text = stringResource(R.string.tip_amount, "$0.00"),
@@ -95,11 +104,14 @@ fun TipTimeLayout() {
 
 @Composable
 fun EditNumberField(
-    amountInput: String
+    amountInput: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     TextField(
         value = amountInput,
-        onValueChange = {}
+        onValueChange = onValueChange,
+        modifier = modifier
     )
 }
 
