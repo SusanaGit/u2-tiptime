@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,11 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TipTimeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    TipTimeLayout()
-                }
+                TipTimeLayoutApp()
             }
         }
     }
@@ -42,41 +39,57 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipTimeLayout() {
-    Column(
+
+    Surface (
         modifier = Modifier
-            .statusBarsPadding()
-            .padding(horizontal = 40.dp)
-            .safeDrawingPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .fillMaxSize()
     ) {
-        Text(
-            text = stringResource(R.string.calculate_tip),
+        Column(
             modifier = Modifier
-                .padding(bottom = 16.dp, top = 40.dp)
-                .align(alignment = Alignment.Start)
-        )
-        Text(
-            text = stringResource(R.string.tip_amount, "$0.00"),
-            style = MaterialTheme.typography.displaySmall
-        )
-        Spacer(modifier = Modifier.height(150.dp))
+                .statusBarsPadding()
+                .padding(horizontal = 40.dp)
+                .safeDrawingPadding(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(R.string.calculate_tip),
+                modifier = Modifier
+                    .padding(bottom = 16.dp, top = 40.dp)
+                    .align(alignment = Alignment.Start)
+            )
+
+            EditNumberField()
+
+            Text(
+                text = stringResource(R.string.tip_amount, "$0.00"),
+                style = MaterialTheme.typography.displaySmall
+            )
+            Spacer(modifier = Modifier.height(150.dp))
+        }
     }
 }
 
-/**
- * Calculates the tip based on the user input and format the tip amount
- * according to the local currency.
- * Example would be "$10.00".
- */
 private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
     val tip = tipPercent / 100 * amount
     return NumberFormat.getCurrencyInstance().format(tip)
 }
 
+@Composable
+fun EditNumberField(
+    modifier: Modifier = Modifier
+) {
+    TextField(
+        value = "",
+        onValueChange = {},
+        modifier = modifier
+    )
+
+}
+
 @Preview(showBackground = true)
 @Composable
-fun TipTimeLayoutPreview() {
+fun TipTimeLayoutApp() {
     TipTimeTheme {
         TipTimeLayout()
     }
