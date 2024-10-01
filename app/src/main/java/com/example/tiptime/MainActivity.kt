@@ -116,7 +116,8 @@ fun EditNumberField(
             Text (
                 stringResource(R.string.bill_amount)
             )
-        }
+        },
+        singleLine = true
     )
 }
 
