@@ -111,7 +111,12 @@ fun EditNumberField(
     TextField(
         value = amountInput,
         onValueChange = onValueChange,
-        modifier = modifier
+        modifier = modifier,
+        label = {
+            Text (
+                stringResource(R.string.bill_amount)
+            )
+        }
     )
 }
 
